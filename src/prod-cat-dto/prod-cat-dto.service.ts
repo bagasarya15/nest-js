@@ -13,6 +13,7 @@ export class ProdCatDtoService {
       });
 
       let success = {
+        status: 200,
         message: 'Kategori berhasil ditambah',
         result: category,
       };
@@ -28,6 +29,7 @@ export class ProdCatDtoService {
       const category = await product_category.findAll();
 
       let success = {
+        status: 200,
         message: 'success',
         result: category,
       };
@@ -45,6 +47,7 @@ export class ProdCatDtoService {
       });
 
       let success = {
+        status:200,
         message: 'success',
         result: category,
       };
@@ -69,6 +72,7 @@ export class ProdCatDtoService {
       );
 
       let success = {
+        status:200,
         message: 'Kategori id ' + id + ' berhasil diperbarui',
         result: category,
       };
@@ -86,6 +90,7 @@ export class ProdCatDtoService {
       });
 
       let success = {
+        status:200,
         message: 'Kategori id ' + id + ' berhasil dihapus',
       };
 

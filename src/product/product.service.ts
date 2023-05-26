@@ -55,7 +55,7 @@ export class ProductService {
 
         let success = {
           message: 'Data produk berhasil ditambah',
-          status: '202',
+          status: 200,
           result: dataProduct,
         };
 
@@ -128,11 +128,6 @@ export class ProductService {
       } else {
         const getPk = await product.findByPk(id);
 
-        const oldImagePath = './image/' + getPk.image;
-        if (fs.existsSync(oldImagePath)) {
-          fs.unlinkSync(oldImagePath);
-        }
-
         const dataProduct = await product.update(
           {
             name: updateProductDto.name,
@@ -149,9 +144,14 @@ export class ProductService {
 
         if (!dataProduct) throw new Error('Isi dulu!');
 
+        const oldImagePath = './image/' + getPk.image;
+        if (fs.existsSync(oldImagePath)) {
+          fs.unlinkSync(oldImagePath);
+        }
+
         let success = {
           message: 'Data produk berhasil diperbarui',
-          status: '202',
+          status: 200,
           result: dataProduct,
         };
 
@@ -179,6 +179,7 @@ export class ProductService {
       await dataProduct.destroy();
 
       let success = {
+        status: 200,
         message: `Data produk id: ${id} berhasil dihapus`,
       };
 

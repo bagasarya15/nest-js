@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
-import { users } from 'models';
+import { customer, roles, users } from 'models';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 
@@ -12,6 +12,11 @@ export class AuthService {
         where: {
           username: createAuthDto.username,
         },
+        include:[
+          {model: customer},
+          {model: roles}
+          ],
+        
       });
       if (!dataUser) throw new Error('Username tidak ditemukan');
 
@@ -26,19 +31,26 @@ export class AuthService {
         { username: dataUser.username, role_id: dataUser.role_id },
         process.env.SECRET_KEY,
         {
-          expiresIn: '10m',
-        },
+          expiresIn: '30m',
+        }
       );
 
       let succes = {
         message: 'Login succes',
-        status: 202,
+        status: 200,
         token: token,
+        result: dataUser
       };
 
       return succes;
     } catch (error) {
-      return error.message;
+      // return error.message
+      let errorMsg = {
+        status: 400,
+        message: error.message,
+      };
+
+      return errorMsg;
     }
   }
 }

@@ -17,6 +17,23 @@ import { roles } from 'models/roles';
 export class UsersService {
   constructor(private sequelize: Sequelize) {}
 
+  async findPaginate() {
+    try {
+      const result = await this.sequelize.query(`SELECT users.id ,users.username, users.password, customer.firstname, customer.lastname, roles.name AS role FROM users JOIN customer ON customer.user_id = users.id JOIN roles ON users.role_id = roles.id ORDER BY users.id`); 
+
+      let success = {
+        message: 'success',
+        result: result,
+        status: 200
+      };
+
+      return success;
+    } catch (error) {
+      return error.message;
+    }
+  }
+
+
   async create(createUserDto: CreateUserDto) {
     let dataUser: any = '';
     try {
@@ -47,7 +64,7 @@ export class UsersService {
 
       let errorMsg = {
         message: error.message,
-        status: 404,
+        status: 400,
       };
 
       return errorMsg;
