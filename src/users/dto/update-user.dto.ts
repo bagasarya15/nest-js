@@ -4,7 +4,7 @@ export class UpdateUserDto {
   @IsNotEmpty({ message: 'Username tidak boleh kosong' })
   username: string;
 
-//   @IsNotEmpty({ message: 'Password tidak boleh kosong' })
+  //   @IsNotEmpty({ message: 'Password tidak boleh kosong' })
   password: any;
 
   @IsNotEmpty({ message: 'Firstname tidak boleh kosong' })

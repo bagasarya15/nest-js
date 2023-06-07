@@ -9,5 +9,4 @@ export class RolesController {
   findAll() {
     return this.rolesService.findAll();
   }
-  
 }

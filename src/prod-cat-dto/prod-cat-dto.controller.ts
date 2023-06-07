@@ -22,28 +22,28 @@ export class ProdCatDtoController {
   create(@Body() createProdCatDtoDto: CreateProdCatDtoDto) {
     return this.prodCatDtoService.create(createProdCatDtoDto);
   }
-  
+
   @Get()
   @UseGuards(AuthGuard)
   findAll() {
     return this.prodCatDtoService.findAll();
   }
-  
+
   @Get(':id')
   @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     return this.prodCatDtoService.findOne(+id);
   }
-  
+
   @Patch(':id')
   @UseGuards(AuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateProdCatDtoDto: UpdateProdCatDtoDto,
-    ) {
-      return this.prodCatDtoService.update(+id, updateProdCatDtoDto);
-    }
-    
+  ) {
+    return this.prodCatDtoService.update(+id, updateProdCatDtoDto);
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard)
   remove(@Param('id') id: string) {

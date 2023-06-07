@@ -28,7 +28,7 @@ export class ProductCategoryController {
   FindCategoryById(@Param('id') id: string): any {
     return this.productCategoryService.GetCategoryById(+id);
   }
-  
+
   @Post('create')
   @UseGuards(AuthGuard)
   PostCategory(@Body() dataBody: string): any {

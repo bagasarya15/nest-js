@@ -47,7 +47,7 @@ export class ProdCatDtoService {
       });
 
       let success = {
-        status:200,
+        status: 200,
         message: 'success',
         result: category,
       };
@@ -72,7 +72,7 @@ export class ProdCatDtoService {
       );
 
       let success = {
-        status:200,
+        status: 200,
         message: 'Kategori id ' + id + ' berhasil diperbarui',
         result: category,
       };
@@ -90,7 +90,7 @@ export class ProdCatDtoService {
       });
 
       let success = {
-        status:200,
+        status: 200,
         message: 'Kategori id ' + id + ' berhasil dihapus',
       };
 

@@ -19,12 +19,14 @@ export class UsersService {
 
   async findPaginate() {
     try {
-      const result = await this.sequelize.query(`SELECT users.id ,users.username, users.password, customer.firstname, customer.lastname, roles.name AS role FROM users JOIN customer ON customer.user_id = users.id JOIN roles ON users.role_id = roles.id ORDER BY users.id`); 
+      const result = await this.sequelize.query(
+        `SELECT users.id ,users.username, users.password, customer.firstname, customer.lastname, roles.name AS role FROM users JOIN customer ON customer.user_id = users.id JOIN roles ON users.role_id = roles.id ORDER BY users.id`,
+      );
 
       let success = {
         message: 'success',
         result: result,
-        status: 200
+        status: 200,
       };
 
       return success;
@@ -33,17 +35,16 @@ export class UsersService {
     }
   }
 
-
   async create(createUserDto: CreateUserDto) {
     let dataUser: any = '';
     try {
-
       const checkUsername = await users.findAll({
-        where: { username: createUserDto.username }
+        where: { username: createUserDto.username },
       });
 
-      if (checkUsername.length > 0) throw new Error('Username sudah dipakai, coba lagi!')
-      
+      if (checkUsername.length > 0)
+        throw new Error('Username sudah dipakai, coba lagi!');
+
       const salt = await bcrypt.genSalt(10);
       const passHash = await bcrypt.hash(createUserDto.password, salt);
 
@@ -61,7 +62,6 @@ export class UsersService {
 
       return success;
     } catch (error) {
-
       let errorMsg = {
         message: error.message,
         status: 400,
@@ -74,10 +74,10 @@ export class UsersService {
   async findAll() {
     try {
       const dataUser = await users.findAll({
-        order:[ ['id', 'DESC'] ]  ,
+        order: [['id', 'DESC']],
         include: [
           {
-            model: roles
+            model: roles,
           },
           {
             model: customer,
@@ -163,12 +163,12 @@ export class UsersService {
       const dataUser = await users.findByPk(id);
 
       const checkUsername = await users.findAll({
-        where: { username: updateUserDto.username }
+        where: { username: updateUserDto.username },
       });
 
       if (checkUsername.length > 0) {
-        if(dataUser.id !== checkUsername[0].id){
-          throw new Error('Username sudah dipakai, coba lagi!')
+        if (dataUser.id !== checkUsername[0].id) {
+          throw new Error('Username sudah dipakai, coba lagi!');
         }
       }
 
@@ -180,9 +180,10 @@ export class UsersService {
         password = passHash;
       }
 
-      let updateCustomer = await customer.update({
-        firstname: updateUserDto.firstname,
-        lastname: updateUserDto.lastname
+      let updateCustomer = await customer.update(
+        {
+          firstname: updateUserDto.firstname,
+          lastname: updateUserDto.lastname,
         },
         {
           where: { user_id: id },
@@ -194,7 +195,7 @@ export class UsersService {
         {
           username: updateUserDto.username,
           password: password,
-          role_id : updateUserDto.role_id
+          role_id: updateUserDto.role_id,
         },
         {
           where: { id: id },
@@ -204,14 +205,14 @@ export class UsersService {
 
       let success = {
         message: 'Data user & customer berhasil diperbarui',
-        status: 200
+        status: 200,
       };
 
       return success;
     } catch (error) {
       let errorMsg = {
         message: error.message,
-        status: 400
+        status: 400,
       };
 
       return errorMsg;
@@ -230,8 +231,8 @@ export class UsersService {
       await users.destroy({
         where: { id: id },
       });
-      
-      return { message: 'Delete data user & customer berhasil', status:200}
+
+      return { message: 'Delete data user & customer berhasil', status: 200 };
     } catch (error) {
       return error.message;
     }

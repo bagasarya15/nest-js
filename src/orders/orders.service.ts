@@ -89,23 +89,23 @@ export class OrdersService {
     }
   }
 
-  async update(id: number, updateOrder:any) {
+  async update(id: number, updateOrder: any) {
     try {
       const findOrder = await orders.findByPk(id);
       if (!findOrder) {
         throw new Error(`Orders id ${id} tidak ditemukan!`);
       }
-    
+
       const findOrderDetail = await order_detail.findAll({
         where: {
           order_id: findOrder.id,
         },
       });
-    
+
       if (!findOrderDetail) {
-        throw new Error("Order Detail Kosong!");
+        throw new Error('Order Detail Kosong!');
       }
-    
+
       // let hasil_orderDetail = updateOrder.order_detail;
 
       //  //FOR INI DIPAKE KALO PAKE PROCEDURE YANG updateOrder
@@ -114,19 +114,18 @@ export class OrdersService {
       // }
 
       const result = await this.sequelize.query(
-        "CALL orderUpdateNew(:order_id, :order_detail)",
+        'CALL orderUpdateNew(:order_id, :order_detail)',
         {
           replacements: {
             order_id: findOrder.id,
-            order_detail: JSON.stringify(updateOrder)
-          }
-        }
+            order_detail: JSON.stringify(updateOrder),
+          },
+        },
       );
-      
-      return result
 
+      return result;
     } catch (error) {
-      return error.message
+      return error.message;
     }
   }
 

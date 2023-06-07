@@ -3,19 +3,18 @@ import { roles } from 'models';
 
 @Injectable()
 export class RolesService {
-    async findAll() {
-        try {
-          const dataRole = await roles.findAll();
-    
-          let succes = {
-            message: 'success',
-            result: dataRole,
-          };
+  async findAll() {
+    try {
+      const dataRole = await roles.findAll();
 
-          return succes;
-        } catch (error) {
-          return error.message;
-        }
-    }    
+      let succes = {
+        message: 'success',
+        result: dataRole,
+      };
+
+      return succes;
+    } catch (error) {
+      return error.message;
+    }
+  }
 }
-

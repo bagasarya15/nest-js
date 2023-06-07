@@ -14,7 +14,7 @@ import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import multer, { diskStorage } from 'multer';
-import { AuthGuard } from 'src/midleware/auth-guard';
+import { AuthGuard, IsAdmin } from 'src/midleware/auth-guard';
 
 const fileUploadInterceptor = FileInterceptor('image', {
   storage: diskStorage({
@@ -69,7 +69,6 @@ export class ProductController {
     updateProductDto.image = file.filename;
     return this.productService.update(+id, updateProductDto);
   }
-
 
   @Delete(':id')
   // @UseGuards(AuthGuard)

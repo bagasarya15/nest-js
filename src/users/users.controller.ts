@@ -18,37 +18,37 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @UseGuards(IsAdmin) 
+  @UseGuards(IsAdmin)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  @UseGuards(IsAdmin) 
+  // @UseGuards(IsAdmin)
   findAll() {
     return this.usersService.findAll();
   }
-  
+
   @Get('paginate')
   @UseGuards(IsAdmin)
-  findPaginate(){
+  findPaginate() {
     return this.usersService.findPaginate();
   }
 
   @Get(':id')
-  @UseGuards(IsAdmin) 
+  @UseGuards(IsAdmin)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
-  @UseGuards(IsAdmin) 
+  @UseGuards(IsAdmin)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
-  @UseGuards(IsAdmin)   
+  @UseGuards(IsAdmin)
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

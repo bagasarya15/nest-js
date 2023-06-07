@@ -12,11 +12,7 @@ export class AuthService {
         where: {
           username: createAuthDto.username,
         },
-        include:[
-          {model: customer},
-          {model: roles}
-          ],
-        
+        include: [{ model: customer }, { model: roles }],
       });
       if (!dataUser) throw new Error('Username tidak ditemukan');
 
@@ -31,15 +27,15 @@ export class AuthService {
         { username: dataUser.username, role_id: dataUser.role_id },
         process.env.SECRET_KEY,
         {
-          expiresIn: '30m',
-        }
+          expiresIn: '15s',
+        },
       );
 
       let succes = {
         message: 'Login succes',
         status: 200,
         token: token,
-        result: dataUser
+        result: dataUser,
       };
 
       return succes;
